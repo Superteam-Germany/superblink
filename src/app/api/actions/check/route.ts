@@ -2,6 +2,7 @@
  * Solana Actions Example
  */
 import {SignMessageResponse, SignMessageData} from "@solana/actions-spec";
+import { verifyMembershipOnChain } from "./utils";
 import bs58 from "bs58";
 import {
   ActionPostResponse,
@@ -54,7 +55,7 @@ export const GET = async (req: Request) => {
           {
             type: 'message',
             href: baseHref,
-            label: 'I ❤️ Superteam German',
+            label: 'I ❤️ Superteam Germany',
           },
         ],
       },
@@ -100,6 +101,7 @@ async function routePostRequest(req: Request): Promise<Response> {
   }
 }
 export const handleSignPlain = async (req: Request) => {
+  const {account} = await req.json();
   console.log("handling sign plain");
   try {
     const payload: SignMessageResponse = {
@@ -112,7 +114,14 @@ export const handleSignPlain = async (req: Request) => {
              },
            },
          };
-
+    const response = await verifyMembershipOnChain(account);
+    if (response) {
+      console.log("LFG")
+      return Response.json(payload, {
+        headers: ACTIONS_CORS_HEADERS,
+      });
+    }
+    console.log("NOT LFG")
     return Response.json(payload, {
       headers: ACTIONS_CORS_HEADERS,
     });
