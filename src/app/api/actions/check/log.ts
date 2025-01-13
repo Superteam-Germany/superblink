@@ -13,7 +13,7 @@ export async function log(
   wallet: string,
   isMember: boolean
 ): Promise<void> {
-  const dbFilePath = "./logs.db"; // Path to the SQLite database file.
+  const dbFilePath = "./logs/database.db"; // Path to the SQLite database file.
 
   // Open the database file, creating it if it doesn't exist.
   const db = await open({
@@ -60,7 +60,7 @@ export async function logLove(
   time: string,
   wallet: string
 ): Promise<void> {
-  const dbFilePath = "./data.db"; // Path to the SQLite database file.
+  const dbFilePath = "./logs/database.db"; // Path to the SQLite database file.
 
   // Open the database file, creating it if it doesn't exist.
   const db = await open({
@@ -122,12 +122,3 @@ export async function getLoversCount(): Promise<number> {
     await db.close();
   }
 }
-
-// Example usage
-(async () => {
-  await log(new Date().toISOString(), "wallet123", true);
-  await logLove(new Date().toISOString(), "wallet456");
-
-  const loversCount = await getLoversCount();
-  console.log(`Number of lovers: ${loversCount}`);
-})();

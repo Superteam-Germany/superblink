@@ -394,7 +394,8 @@ async function handleDisplayNFT(req: Request): Promise<Response> {
             type: 'message',
             href: baseHref+'?next=show-love-sign',
             label: 'I ❤️ Superteam Germany',
-          }
+          },
+          
         ],
       },
     };
