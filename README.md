@@ -26,21 +26,7 @@ pnpm install
 pnpm dev
 ```
 
-## Apps
+## Usage
 
-### web
+Head over to **[dial.to](https://dial.to/developer?url=http://localhost:3000/api/actions/check&cluster=mainnet)**
 
-This is a Next.js web app to get you started on interacting with the Solana network.
-
-Start the web app
-
-```shell
-pnpm dev
-```
-
-Build the web app
-
-```shell
-pnpm build
-```
-#
