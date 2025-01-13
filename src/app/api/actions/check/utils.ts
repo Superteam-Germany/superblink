@@ -93,12 +93,6 @@ interface searchAssetsByOwnerRequest {
   }
 
 
-
-
-
-
-
-
 interface SearchAssetsResponse {
     interface: string;
     id: string;
@@ -111,7 +105,7 @@ interface SearchAssetsResponse {
     }; 
 
   }
-interface Content {
+export interface Content {
   $schema: string;
   json_uri: string;
   files: File[];
@@ -124,7 +118,7 @@ interface File {
   mime: string;
 }
 
-interface Metadata {
+export interface Metadata {
   attributes: Attribute[];
   description: string;
   name: string;
@@ -140,14 +134,77 @@ interface Attribute {
 interface Links {
   image: string;
 }
-
-export async function verifyMembershipOnChain(ownerAddress: string): Promise<Metadata | boolean> {
+export interface verifyMembershipOnChainResponse {
+  id: string;
+  content: Content;
+  name: string | null;
+  discord: string | null;
+  imageUrl: string | null;
+}
+export async function verifyMembershipOnChain(ownerAddress: string): Promise<verifyMembershipOnChainResponse | boolean> {
     const resp = await searchAssetsByOwner(ownerAddress);
     if (resp.result.total>0){
       const searchAssetsResponse = resp.result.items[0] as SearchAssetsResponse;
-      const metadata = searchAssetsResponse.content.metadata;
-      console.log(metadata);
-      return metadata;
+      const content = searchAssetsResponse.content;
+      const id = searchAssetsResponse.id;
+     // console.log(content);
+      const imageUrl = content.links.image;
+const urlParams = new URL(imageUrl).searchParams;
+
+const name = urlParams.get('name');
+const discord = urlParams.get('discord');
+return {id,content, name, discord, imageUrl} ;
     }
     return false;
 }
+
+export function shortenSolanaWallet(wallet: string): string {
+  if (wallet.length <= 8) {
+    return wallet; // No need to shorten if the wallet is already short.
+  }
+  const firstPart = wallet.slice(0, 4);
+  const lastPart = wallet.slice(-4);
+  return `${firstPart}...${lastPart}`;
+}
+
+
+export function createTwitterShareLink(url?: string, hashtags?: string[], via?: string): string {
+  let tweetText = "Thanks to @SuperteamDE and @saydialect, I can now keep track of my precious ST Germany NFT as well as my XP progress seamlessly with a few clicks. Check yours now: https://dial.to/?action=solana-action%3Ahttp%3A%2F%2Flocalhost%3A3000%2Fapi%2Factions%2Fcheck&cluster=mainnet \n";
+  // Replace each `#` in the tweetText with the corresponding hashtag
+  if (hashtags && hashtags.length > 0) {
+    tweetText = tweetText.replace(/#/g, () => `#${hashtags.shift()}`);
+  }
+
+  // Base Twitter intent URL
+  const baseURL = "https://twitter.com/intent/tweet";
+
+  // URL parameters
+  const params = new URLSearchParams();
+
+  // Add the text parameter
+  if (tweetText) {
+    params.append("text", tweetText);
+  }
+
+  // Add the URL parameter (optional)
+  if (url) {
+    params.append("url", url);
+  }
+
+  // Add via (optional, no `@` symbol in the handle)
+  if (via) {
+    params.append("via", via);
+  }
+
+  // Construct the final URL
+  return `${baseURL}?${params.toString()}`;
+}
+
+// // Example Usage:
+// const tweetText = "I love # and #!";
+// const shareUrl = "https://example.com";
+// const hashtags = ["TypeScript", "Coding"];
+// const via = "YourTwitterHandle";
+
+// const twitterLink = createTwitterShareLink(tweetText, shareUrl, hashtags, via);
+// console.log("Twitter Share Link:", twitterLink);
