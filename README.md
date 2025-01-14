@@ -10,8 +10,8 @@
 #### Clone the repo
 
 ```shell
-git clone https://github.com/7moodev/blinks.git
-cd blinks
+git clone https://github.com/Superteam-Germany/superblink.git
+cd superblink
 ```
 
 #### Install Dependencies
