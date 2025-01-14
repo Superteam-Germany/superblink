@@ -101,7 +101,7 @@ export async function logLove(
  * @returns The number of rows in the Lovers table.
  */
 export async function getLoversCount(): Promise<number> {
-  const dbFilePath = "./data.db"; // Path to the SQLite database file.
+  const dbFilePath = "./logs/database.db"; // Path to the SQLite database file.
 
   // Open the database file.
   const db = await open({
