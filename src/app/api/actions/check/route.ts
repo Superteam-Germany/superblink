@@ -31,6 +31,8 @@ let counter = 0;
 const teletubbies = 'https://i.imgur.com/WSXGTgt.png';
 const loveKitty  = "https://i.imgur.com/LuaAGt4.png";
 const sadKitty = 'https://i.imgur.com/yHr2cBe.png'
+const plainLogo = "https://i.imgur.com/NLhj2bZ.png"
+const design = "https://i.imgur.com/dluUGua.png"
 export const GET = async (req: Request) => {
   
   console.log("Console: GET Request Received");
@@ -60,7 +62,7 @@ export const defaultGet = async (req: Request) => {
     const payload: ActionGetResponse = {
       type: 'action',
       label: 'Superteam Germany Membership',
-      icon: 'https://i.imgur.com/NLhj2bZ.png',
+      icon: design,
       title: "Superteam Germany Membership",
       description: "You can check your Superteam Germany membership status here. Find out your XP and more.",
       links: {
