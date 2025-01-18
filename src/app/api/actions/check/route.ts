@@ -33,6 +33,7 @@ const loveKitty  = "https://i.imgur.com/LuaAGt4.png";
 const sadKitty = 'https://i.imgur.com/yHr2cBe.png'
 const plainLogo = "https://i.imgur.com/NLhj2bZ.png"
 const design = "https://i.imgur.com/dluUGua.png"
+
 export const GET = async (req: Request) => {
   
   console.log("Console: GET Request Received");
@@ -153,7 +154,7 @@ async function routePostRequest(req: Request): Promise<Response> {
       return await handleEnding(req);
   }
 }
-export const handleSignPlain = async (req: Request) => {
+const handleSignPlain = async (req: Request) => {
   console.log("Console: Handling Sign Plain helper function");
 
  
@@ -447,7 +448,7 @@ async function handleEnding(req: Request): Promise<Response> {
         action: {
           type: 'action',
           label: 'Superteam Germany Membership',
-          icon: 'https://i.imgur.com/NLhj2bZ.png',
+          icon: design,
           title: "Superteam Germany Membership",
           description: "You can check your Superteam Germany membership status here. Find out your XP and more.",
           links: {

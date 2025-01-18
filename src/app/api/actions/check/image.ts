@@ -3,10 +3,6 @@ import fs from 'fs';
 import * as cloudinary from 'cloudinary';
 import path from 'path';
 import env from 'dotenv';
-
-
-
-
 export async function createNFT(attributes: any, name:string, discord: string, imageUrl: string) {
     const totalXP = attributes[0].value;
     const writingXP = attributes[1].value;
